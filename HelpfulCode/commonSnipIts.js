@@ -113,3 +113,24 @@ myMap.set(a, "yes");
 myMap.has(a); // returns true
 myMap.get(a); // returns "yes"
 */
+
+/* Set Union Intersect and Diff
+Union: 
+let a = new Set([1,2,3]);
+let b = new Set([4,3,2]);
+let union = new Set([...a, ...b]);
+
+Intersection: 
+let a = new Set([1,2,3]);
+let b = new Set([4,3,2]);
+let intersection = new Set(
+    [...a].filter(x => b.has(x)));
+    // {2,3}
+
+Diff:
+let a = new Set([1,2,3]);
+let b = new Set([4,3,2]);
+let difference = new Set(
+    [...a].filter(x => !b.has(x)));
+    // {1}
+*/

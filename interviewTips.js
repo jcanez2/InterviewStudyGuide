@@ -209,25 +209,26 @@ console.log("Set pass Array : " + mySet.entries());
 //====================================================
 
 class Queue{
+    
 
     constructor(){
         this.elements = [];
     }
 
-    enqueue(element){
-        this.elements.push(element);
+    enqueue(ele){
+        this.elements.push(ele);
     }
 
     dequeue(){
         
-        if(this.isEmpty()) // check this to change (this.elements.isEmpty())
-           return 'Queue is empty';
-
-        this.elements.shift();     
+       if(this.elements.isEmpty()){
+           return 'Underflow';
+       }     
+       return this.elements.shift();
     }
 
     isEmpty(){
-        return this.elements.length == 0;
+        return this.elements.length === 0;
     }
 }
 
@@ -251,7 +252,44 @@ class Graph{
     }
 
     deleteVert(removedVert){
-        return removedVert;
+        console.log("deleting : " + removedVert);
+        if(!this.AdjacencyList.has(removedVert)){
+            return 'vertex does not exist';
+        }
+
+        this.AdjacencyList.delete(removedVert);
+
+        let iterValues = this.AdjacencyList.values();
+        for(let verts of iterValues){
+            console.log("values of each key "+verts);
+            let index = verts.indexOf(removedVert);
+            console.log("index of removded vert =  " + index);
+            if(!(index === -1)){
+                console.log("vert to remove "+ verts.slice(index, index+1));
+                verts.splice(index, 1);
+            } 
+        }
+        
+        // remove all unreachable nodes:
+        let listOfReachables = this.dfsWholeTree('A');
+        console.log('Reachable from A = ');
+        
+        listOfReachables.forEach((value) => console.log(" " + value + " is reachable"));
+        
+        
+        
+        console.log('Deleting all unreachable');
+        let allKeys = new Set([...this.AdjacencyList.keys()]);
+        allKeys.forEach((values) => console.log(" " + values + " is a key"));
+
+        let unreachable = new Set([...allKeys].filter(x => !listOfReachables.has(x)));
+        unreachable.forEach((value) => console.log(value + ' is not reachable'));
+
+        unreachable.forEach((vertex) => this.AdjacencyList.delete(vertex));
+
+
+
+        
     }
 
     addEdge(fromVert, toVert){
@@ -265,6 +303,7 @@ class Graph{
     }
 
     printGraph(){
+        console.log("====Printing Graph=====");
         let verticies = this.AdjacencyList.keys();
         for(let vertex of verticies){
             console.log(vertex + ':');
@@ -281,22 +320,114 @@ class Graph{
     dfsWholeTree(startVertex){
         let visited = new Set();
                  
-        helper(startVertex, this.AdjacencyList);
+        return helper(startVertex, this.AdjacencyList);
 
 
 
         function helper(origin, list){
-            console.log(origin + " -> ")
             visited.add(origin);   
+            //console.log("size of set for vertex origin : " + (list.get(origin).length));
+            
+
+            if(list.get(origin).length == 0){
+                console.log(origin)
+                return;
+            }
+
+            console.log(origin + " -> ")
+            
             let vertexIt = list.get(origin);
             for(let vertex of vertexIt){
                 if(!visited.has(vertex)){
                     helper(vertex, list);
                 }
             }
+
+            return visited;
+            
         }
 
     }
+
+    dfsFromTo(start, end){
+        
+        
+        console.log("=="+ start + " =find=> "+ end+ "==")
+        let visited = new Set();
+        let notFound = true;
+
+
+        helper2(start, end, this.AdjacencyList);
+
+        
+        function helper2(start, end, list){
+            visited.add(start);
+            if(list.get(start).length == 0){
+                console.log(start)
+                return "reached end of graph " + end + " not found";
+            }
+            
+            let slink = start;
+
+            let vertexIt = list.get(start);
+            for(let vertex of vertexIt){
+                if(!visited.has(vertex)){
+                    if(vertex === end){
+                        if(notFound){
+                            console.log(slink + " -> " + end + " : found");
+                        }
+                        notFound = false;
+                        return;
+                    }
+                    else
+                    {
+                        if(notFound){
+                            console.log(slink + ' -> ' + vertex);
+                            helper2(vertex, end, list);
+                        }
+                    }
+                }
+            } 
+
+        }
+
+        return 'vertex not found';
+    }
+
+    // bfs()
+    bfs(start){
+        console.log("//======BFS====")
+        //create visited
+        let visited = new Set();
+        let que = new Array();
+        // create a queue
+        let q = new Queue();
+
+        // add starting vertext to queue
+        visited.add(start);
+        que.push(start);
+
+        
+        // check all elements in tree
+        while(que.length !== 0){
+            // get the elemet from the queue
+            let element = que.shift();
+            console.log(element);
+
+            // get the list for the current vertex
+            let vertices = this.AdjacencyList.get(element);
+            vertices.forEach((vertex) => {
+                if(!visited.has(vertex)){
+                    visited.add(vertex);
+                    que.push(vertex);
+                }
+            });
+
+        }
+        
+
+    }
+
 }
 
 
@@ -324,3 +455,19 @@ g.printGraph();
 // Do a dfs()
 console.log("//==========DFS==========")
 g.dfsWholeTree('A');
+g.bfs('A');
+
+
+// Do a dfs() for a specific element
+console.log('//======DFSFromTo===========')
+g.dfsFromTo('A', 'F');
+g.dfsFromTo('A', 'Q');
+
+
+//========Testing=================
+
+console.log("\n//==============Testing============\n");
+g.printGraph();
+g.deleteVert('D');
+g.printGraph();
+g.bfs('A');
