@@ -232,5 +232,95 @@ class Queue{
 }
 
 class Graph{
-    
+
+    // defining vertex array and adjacentcy list
+    constructor(numberOfVertices){
+        this.numberOfVertices = numberOfVertices;
+        this.AdjacencyList = new Map();
+    }
+
+    //====functions===============
+    addVert(newVert){
+        if(this.AdjacencyList.has(newVert)){
+            return 'This vertex already exists.';
+        }
+
+        this.AdjacencyList.set(newVert, []); // us a set instead of an array
+        
+        return newVert;
+    }
+
+    deleteVert(removedVert){
+        return removedVert;
+    }
+
+    addEdge(fromVert, toVert){
+        if(!this.AdjacencyList.has(fromVert)){
+            return 'starting edge does not exist';
+        }
+
+        this.AdjacencyList.get(fromVert).push(toVert);
+        
+        return fromVert + " -> " + toVert + " Added";
+    }
+
+    printGraph(){
+        let verticies = this.AdjacencyList.keys();
+        for(let vertex of verticies){
+            console.log(vertex + ':');
+            this.AdjacencyList.get(vertex).forEach(
+                function(destination){
+                    console.log(vertex + " -> " + destination);
+                }
+            );
+            console.log("//=======================");
+        }
+    }
+
+    // DFS
+    dfsWholeTree(startVertex){
+        let visited = new Set();
+                 
+        helper(startVertex, this.AdjacencyList);
+
+
+
+        function helper(origin, list){
+            console.log(origin + " -> ")
+            visited.add(origin);   
+            let vertexIt = list.get(origin);
+            for(let vertex of vertexIt){
+                if(!visited.has(vertex)){
+                    helper(vertex, list);
+                }
+            }
+        }
+
+    }
 }
+
+
+let g = new Graph(6);
+
+let newVerts = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+// add vertices to graph
+newVerts.forEach((vert) => g.addVert(vert));
+
+// add edges to graph
+g.addEdge('A', 'B');
+g.addEdge('A', 'C');
+g.addEdge('A', 'D');
+g.addEdge('B', 'C');
+g.addEdge('B', 'D');
+g.addEdge('C', 'A');
+g.addEdge('C', 'F');
+g.addEdge('E', 'F');
+
+// print Graph
+console.log("//========Graph========");
+g.printGraph();
+
+// Do a dfs()
+console.log("//==========DFS==========")
+g.dfsWholeTree('A');
