@@ -205,3 +205,32 @@ let myArr = [1, 2, 3, 4, 5];
 let mySet = new Set(myArr);
 
 console.log("Set pass Array : " + mySet.entries());
+
+//====================================================
+
+class Queue{
+
+    constructor(){
+        this.elements = [];
+    }
+
+    enqueue(element){
+        this.elements.push(element);
+    }
+
+    dequeue(){
+        
+        if(this.isEmpty()) // check this to change (this.elements.isEmpty())
+           return 'Queue is empty';
+
+        this.elements.shift();     
+    }
+
+    isEmpty(){
+        return this.elements.length == 0;
+    }
+}
+
+class Graph{
+    
+}
