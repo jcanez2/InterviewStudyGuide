@@ -115,6 +115,7 @@ myMap.get(a); // returns "yes"
 */
 
 /* Set Union Intersect and Diff
+this is the union funciton:
 Union: 
 let a = new Set([1,2,3]);
 let b = new Set([4,3,2]);

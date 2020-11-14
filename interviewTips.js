@@ -23,14 +23,14 @@ about them.
 
 /* Perpare: 
 
-* Study Quicksort & Mergesort
-    * When are they efficent
-    * When to use Radix, insertion
+* Study Quicksort & Mergesort : done
+    * When are they efficent : done
+    * When to use Radix, insertion : done
  * Traveling Salesman
  * Knapsack
  * What does NP-complete mean?
  * Trees
- * Adjasency list
+ * Adjasency list : done
  * Priority Queues
  * Build a hashTable from scatch
  
@@ -39,41 +39,41 @@ about them.
   * n-ary trees
   * Trie-trees
   * Black Red Trees
-  * BFS
-  * DFS
+  * BFS : done
+  * DFS : done
   * InOrder
   * PostOrder
   * PreOrder
 
 * Heaps
     *Understand application/ When to use
-    *Big O
+    *Big O : done
 
 
 * Graphs
     * Types
         * Objects and pointers
-        * matrix
-        * Adjacenty List
+        * matrix : done
+        * Adjacenty List : done
     * Traversal algorithms
-        * BFS
-        * DFS
+        * BFS : done
+        * DFS : done
     * Complexity
-* Recursion
-* Deadlock vs Lifelock
+* Recursion : done
+* Deadlock vs Lifelock : done
 
 * Fundementals of "modern Concurrency constructs"
 * n choose K
 
-* mod % a negative number
+* mod % a negative number : done
 
 * Read : https://sites.google.com/site/steveyegge2/five-essential-phone-screen-questions
-* watch: https://www.youtube.com/watch?v=oWbUtlUhwa8&feature=youtu.be
+* watch: https://www.youtube.com/watch?v=oWbUtlUhwa8&feature=youtu.be : done
 
 */
 
 /* Problems to do:
-* Split a string without spaces
+* Split a string without spaces : done
 * Stairs : Dynamic 
 */
 
@@ -325,6 +325,8 @@ class Graph{
 
 
         function helper(origin, list){
+            // set node as visited get vertices
+            // check each vert if not vot visited -> visit
             visited.add(origin);   
             //console.log("size of set for vertex origin : " + (list.get(origin).length));
             
