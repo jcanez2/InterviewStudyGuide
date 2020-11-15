@@ -1,7 +1,7 @@
 /* Notes:
 * Think outload
 
-* Ask clarifying questions to get detial
+* Ask clarifying questions to get details
     about the problem
 
 * Take tips seriously and add more questions
@@ -29,21 +29,21 @@ about them.
  * Traveling Salesman
  * Knapsack
  * What does NP-complete mean?
- * Trees
+ * Trees : done
  * Adjasency list : done
  * Priority Queues
  * Build a hashTable from scatch
  
- * Trees
-  * Binary
+ * Trees : done
+  * Binary : done
   * n-ary trees
   * Trie-trees
   * Black Red Trees
   * BFS : done
   * DFS : done
-  * InOrder
-  * PostOrder
-  * PreOrder
+  * InOrder : done
+  * PostOrder : done
+  * PreOrder : done
 
 * Heaps
     *Understand application/ When to use
@@ -546,23 +546,158 @@ class BinarySearchTree{
                 return nNode;
             }
 
-            
+            // node has two children
+            let auxNode = this.findMinNode(nNode.right);
+            // dont remove the node change data instead
+            nNode.val = auxNode.val;
+            // set the right node to what ever happens on the right sub
+            // tree after deleing the min value of the right sub tree
+            // this happens because the min value could have a right sub-tree
+            nNode.right = this.removeNode(nNode.right, auxNode.val);
+            return nNode;
         }
 
+        /*
+            function height(node){
+            if(!node) return 0;
+            var leftHeight = height(node.left);
+            var rightHeight = height(node.right);
 
+            return Math.max(leftHeight, rightHeight) + 1;
+}
+        */
+    }
+
+    // get the min value of a tree given a node
+    findMinNode(nNode){
+        if(nNode.left === null){
+            return nNode;
+        }else{
+            return this.findMinNode(nNode.left);
+        }
+    }
+    // get the node 
+    findMaxNode(nNode){
+        if(nNode.right === null){
+            return nNode;
+        }else{
+            return this.findMaxNode(nNode.right);
+        }
+    }
+
+    // get the root node
+    getRootNode(){
+        return this.root;
+    }
+
+    //search the tree for a node
+    search(nNode, val){
+        if(nNode == null){
+            return null;
+        }else if(val < nNode.val){
+            this.search(nNode.left, val)
+        }else if(val > nNode.val){
+            this.search(nNode.right, val);
+        }else{
+            return nNode;
+        }
     }
 
 
     //===helper functions====
-    // findMinNode()
-    // getRootNode()
-    // inOrder(node)
     // preOrder(node)
+    preOrder(nNode){
+        if(nNode !== null){
+            console.log(nNode.val);
+            this.preOrder(nNode.left);
+            this.preOrder(nNode.right);
+        }
+    }
+    // inOrder(node)
+    inOrder(nNode){
+        if(nNode !== null){
+            this.inOrder(nNode.left);
+            console.log(nNode.val);
+            this.inOrder(nNode.right);
+        }
+    }
     // postOrder(node)
-    // search(node, data)
+    postOrder(nNode){
+        if(nNode !== null){
+            this.postOrder(nNode.left);
+            this.postOrder(nNode.right);
+            console.log(nNode.val);
+        }
+    }
 }
 
 
-function createTree(){
+let BST = new BinarySearchTree();
 
-}
+BST.insert(15);
+BST.insert(25);
+BST.insert(10);
+BST.insert(7);
+BST.insert(22);
+BST.insert(17);
+BST.insert(13);
+BST.insert(5);
+BST.insert(9);
+BST.insert(27);
+
+//          15 
+//         /  \ 
+//        10   25 
+//       / \   / \ 
+//      7  13 22  27 
+//     / \    / 
+//    5   9  17 
+
+let root = BST.getRootNode();
+
+console.log("//==========Tree=Stuff=========")
+console.log("inOrder");
+BST.inOrder(root);
+// prints 5 7 9 10 13 15 17 22 25 27 
+
+console.log('Remove 5');
+BST.remove(5);
+//          15 
+//         /  \ 
+//        10   25 
+//       / \   / \ 
+//      7  13 22  27 
+//       \    / 
+//        9  17  
+console.log('inOrder');
+BST.inOrder(root);
+// prints 7 9 10 13 15 17 22 25 27 
+console.log('remove 7');
+BST.remove(7);
+//          15 
+//         /  \ 
+//        10   25 
+//       / \   / \ 
+//      9  13 22  27 
+//            / 
+//           17  
+console.log('inOrder');
+BST.inOrder(root);
+console.log('remove 15 the root');
+BST.remove(15);
+//          17 
+//         /  \ 
+//        10   25 
+//       / \   / \ 
+//      9  13 22  27 
+root = BST.getRootNode();
+console.log('inOrder');
+BST.inOrder(root);
+console.log('preOrder');
+BST.preOrder(root);
+
+
+console.log('postOrder');
+BST.postOrder(root);
+
+
