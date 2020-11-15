@@ -473,3 +473,96 @@ g.printGraph();
 g.deleteVert('D');
 g.printGraph();
 g.bfs('A');
+
+
+//=============Tree testing===================
+class Node{
+
+    constructor(val){
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class BinarySearchTree{
+    constructor(){
+        this.root = null;
+    }
+
+    //======functions======
+    // insert(data)
+    insert(val){
+        let newNode = new Node(val);
+
+        if(this.root === null){
+            this.root = newNode;
+        }else{
+            this.insertNode(this.root, newNode);
+        }
+    }
+    // insertNode(node, newNode)
+    insertNode(root, nNode){
+        if(nNode.val < root.val){
+            if(root.left === null){
+                root.left = nNode;
+            }else{
+                this.insertNode(root.left, nNode);
+            }
+        }else{
+            if(root.right === null){
+                root.right = nNode;
+            }else{
+                this.insertNode(root.right, nNode);
+            }
+        }
+    }
+
+    // remove(data)
+    remove(val){
+        this.root = this.removeNode(this.root, val);
+    }
+
+    removeNode(nNode, val){
+        if(nNode === null){
+            return null;
+        }else if(val <  nNode.val){
+            nNode.left = this.removeNode(nNode.left, val);
+            return nNode;
+        }else if(val > nNode.val){
+            nNode.right = this.removeNode(nNode.right, val);
+            return nNode;
+        }else{
+            if(nNode.left == null && nNode.right == null){
+                nNode = null;
+                return nNode;
+            }
+
+            if(nNode.left == null){
+                nNode = nNode.right;
+                return nNode;
+            }else if(nNode.right == null){
+                nNode = nNode.left;
+                return nNode;
+            }
+
+            
+        }
+
+
+    }
+
+
+    //===helper functions====
+    // findMinNode()
+    // getRootNode()
+    // inOrder(node)
+    // preOrder(node)
+    // postOrder(node)
+    // search(node, data)
+}
+
+
+function createTree(){
+
+}
