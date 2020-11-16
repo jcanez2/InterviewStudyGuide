@@ -1526,3 +1526,41 @@ def cal_chairs(starts, ends):
 
 */
 
+
+/* fibonacci
+// iterative:
+function fibonacci(num){
+  let a = 1;
+  let b = 0;
+  let temp;
+
+  while (num >= 0){
+    temp = a;
+    a = a + b;
+    b = temp;
+    num--;
+  }
+
+  return b;
+}
+
+// recursive
+function fibonacci(num) {
+  if (num <= 1) return 1;
+
+  return fibonacci(num - 1) + fibonacci(num - 2);
+}
+
+// DP solution:
+function fibonacci(num, memo) {
+  memo = memo || {};
+
+  if (memo[num]) return memo[num];
+  if (num <= 1) return 1;
+
+  return memo[num] = fibonacci(num - 1, memo) + fibonacci(num - 2, memo);
+}
+
+
+*/
+
