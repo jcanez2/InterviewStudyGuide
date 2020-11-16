@@ -26,19 +26,26 @@ about them.
 * Study Quicksort & Mergesort : done
     * When are they efficent : done
     * When to use Radix, insertion : done
- * Traveling Salesman
- * Knapsack
- * What does NP-complete mean?
+ * Traveling Salesman : research done
+ * Knapsack : research done
+ * What does NP-complete mean? : done 
+ *      A problem p in NP is
+ *      // NP = Non-Deterministic Poly time: poly time to check but ...
+ *      // P stand for poly time
+ *      //NP-complete if every other problem in NP can be transformed 
+ *      //(or reduced) into p in polynomial time.
+ *      // NP complete is a problem that is NP-Hard but also
+ *      // has a Non-determinstic poly time alogorithm.
  * Trees : done
  * Adjasency list : done
- * Priority Queues
- * Build a hashTable from scatch
+ * Priority Queues : done
+ * Build a hashTable from scatch : done
  
  * Trees : done
   * Binary : done
-  * n-ary trees
-  * Trie-trees
-  * Black Red Trees
+  * n-ary trees : done
+  * Trie-trees  : done
+  * Black Red Trees : done
   * BFS : done
   * DFS : done
   * InOrder : done
@@ -46,24 +53,24 @@ about them.
   * PreOrder : done
 
 * Heaps
-    *Understand application/ When to use
+    *Understand application/ When to use : done
     *Big O : done
 
 
 * Graphs
     * Types
-        * Objects and pointers
+        * Objects and pointers : done
         * matrix : done
         * Adjacenty List : done
     * Traversal algorithms
         * BFS : done
         * DFS : done
-    * Complexity
+    * Complexity : done
 * Recursion : done
 * Deadlock vs Lifelock : done
 
 * Fundementals of "modern Concurrency constructs"
-* n choose K
+* n choose K : done : n! / ((n - k )! * k!)
 
 * mod % a negative number : done
 
@@ -701,3 +708,61 @@ console.log('postOrder');
 BST.postOrder(root);
 
 
+//========Red-black tree rules===
+// * the root and leaves are black
+// * if a node is red it has black children
+// * all paths frm a node to its nill descendants 
+//     have the same number of black nodes
+// * longest path is no more than twice the lenght
+//      of the shortest path
+
+
+//===========HashTable========
+console.log('//=====HashTable=======');
+
+class HashTable{
+    constructor(){
+        this.values = {};
+        this.length = 0;
+        this.seed = 2;
+    }
+
+    calculateHash(key){
+        return key.toString().length % this.seed;
+    }
+
+    add(key, value){
+        let hash = this.calculateHash(key);
+
+        if(!this.values.hasOwnProperty(hash)){
+            this.values[hash] = {};
+        }
+
+        if(!this.values[hash].hasOwnProperty(key)){
+            this.length++;
+        }
+
+        this.values[hash][key] = value;
+    }
+
+    get(key){
+        let hash = this.calculateHash(key);
+
+        if(this.values.hasOwnProperty(hash) && this.values[hash].hasOwnProperty(key)){
+            return this.values[hash][key];
+        }else{
+            return null;
+        }
+    }
+}
+
+// create object of type hash table
+let ht = new HashTable();
+// add data to the hash table ht
+ht.add('USA', '300');
+ht.add('Germany', '100');
+ht.add('Italy', '50');
+
+//get
+console.log('Get: Italy');
+console.log(ht.get('Italy'));
