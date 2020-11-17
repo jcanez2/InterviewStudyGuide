@@ -895,3 +895,82 @@ let dijkstra = (graph) => {
 
 dijkstra(graph);
 
+//====2D escape Room===========
+var isEscapePossible = function(blocked, source, target) {    
+    let n = blocked.length;
+    
+    if(n == 0 || (source[0] == target[0] && source[1] == target[1])){
+        return true;
+    }
+    
+    let blocks = new Set();
+    
+    for(let b of blocked){
+        //blocks.add(b.toString());
+        blocks.add(b);
+    }
+    
+    let visited = new Set();
+    
+    let sourceCanPass = bfs(source, target, visited, blocks);
+    
+    if(!sourceCanPass){
+        return false;
+    }
+    
+    visited.clear();
+    let targetCanPass = bfs(target, source, visited, blocks);
+    return targetCanPass;
+};
+
+function bfs(start, end, visited, blocks){
+    let dx = [1, -1, 0, 0];
+    let dy = [0, 0, 1, -1];
+    let q = new Array();
+    
+    console.log("start = " + start);
+    q.push(start);
+    
+    //visited.add(start[0] + ','+start[1]);
+    visited.add(start);
+    
+    while(q.length > 0){
+        let cur = q.shift();
+        if(cur[0] == end[0] && cur[1] == end[1]){
+            return true;
+        }
+        
+        for(let k = 0; k < 4; k++){
+            let nx = cur[0] + dx[k];
+            let ny = cur[1] + dy[k];
+            
+            if(nx , 0 || ny < 0 || nx >= 1000000 || ny >= 1000000){
+                continue;
+            }
+            
+            let nz = [nx, ny];
+            //nz = nz.toString();
+            
+            let isInVisited = visited.has(nz);
+            if(!isInVisited){
+                visited.add(nz);
+            }
+            
+            if(blocks.has(nz) || isInVisited){
+                continue;
+            }
+            
+            //q.push([nx,ny]);
+            q.push(nz);
+        }
+        // if we have q.size() nodes visited, we need at least q.size() nodes to block it;
+        if(q.length > blocks.size){
+            console.log("true from 1");
+            return true;
+        }
+        
+    }
+    
+    return false;
+}
+
