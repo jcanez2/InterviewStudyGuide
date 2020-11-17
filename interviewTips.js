@@ -766,3 +766,132 @@ ht.add('Italy', '50');
 //get
 console.log('Get: Italy');
 console.log(ht.get('Italy'));
+
+
+
+//=======Dijkstra's===========Search
+console.log('//=====Dijkstra\'s=======');
+let graph = {
+    start: {A:5, B:2},
+    A: {C:4, D:2},
+    B: {A:8, D:7},
+    C: {D:6, finish:3},
+    D: {finish: 1},
+    finish:{}
+};
+
+// Keep track of the lowest weight form one node to the next
+let weight = {
+    A : 5, 
+    B: 2,
+    finish: Infinity
+};
+
+// Keep track of the lowest weight parent:
+let parent = {
+    A: 'start',
+    B: 'start',
+    finish: null
+};
+
+// Visited
+let visited = ['start', 'A', 'B'];
+
+
+// Get node with lowest weight:
+let findLowestWeightNode = (weights, processed) =>{
+    let knowNodes = Object.keys(weights);
+
+    let lowestWeightNodes = knowNodes.reduce((lowest, node) => {
+        if(lowest === null && !processed.includes(node)){
+            lowest = node;
+        }
+
+        if(weights[node] < weights[lowest] && !processed.includes(node)){
+            lowest = node;
+        }
+        console.log('Lowest = '+lowest);
+        return lowest;
+    }, null);
+    console.log('lowest weight Node = ' + lowestWeightNodes);
+    return lowestWeightNodes;
+};
+
+let dijkstra = (graph) => {
+    // track lowest cost to reach each node
+    let weights = Object.assign({finish: Infinity}, graph.start);
+
+    // track paths
+     let parents = {finish: null};
+
+     for(let child in graph.start){
+         parents[child] = 'start';
+     }
+
+     // track nodes that have already been processed
+     let processed = [];
+
+     // Next we will set the inital values of the nodes being processed
+     // using the lowestCostNode function. Then, we will begin a while loop
+     // which will continuously lok for the cheapest node.
+     
+     let node = findLowestWeightNode(weights, processed);
+
+     while(node){
+         // Get the weight of the current node
+         let weight = weights[node];
+
+         // get the neibors of current node
+         let children = graph[node];
+
+         // * Go though each of the children and calculate the weight
+         //     to reach that child node.
+         // * Update the weight of each child node in the weights object
+         //     if it is the cheapest path or the only path.
+         
+         for(let k in children){
+             let newWeight = weight + children[k];
+             
+             if(!weights[k] || weights[k] > newWeight){
+                 weights[k] = newWeight;
+                 console.log("this is node = " + node);
+                 parents[k] = node;
+             }
+         }
+
+         // push processed data into its data structure
+         processed.push(node);
+
+         // repeat until we processed all of the nodes.
+         node = findLowestWeightNode(weights, processed);
+     }
+
+     let optimialPath = ['finish']; // set end node
+
+     let parent = parents.finish; // paret = the parent of finish
+
+     while(parent){ // while there are parents
+        optimialPath.unshift(parent); // place that parent at front of path
+        parent = parents[parent]; // get next parent
+     }
+
+     let results = {
+        distance: weights.finish,
+        path: optimialPath
+     };
+
+     let arrg = results['path'];
+     console.log('distance = ' + results['distance']);
+     let thisPath = "Optimal path : ";
+     for(let i = 0; i < arrg.length; i++){
+         thisPath += arrg[i];
+         if(i != arrg.length - 1){
+             thisPath += ' => ';
+         }
+     }
+     console.log(thisPath);
+     //return results
+};
+
+dijkstra(graph);
+
