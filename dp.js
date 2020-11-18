@@ -147,3 +147,100 @@ var maxSubArray = function(nums) {
      }
  };
      
+
+ /* fibonacci
+// iterative:
+function fibonacci(num){
+  let a = 1;
+  let b = 0;
+  let temp;
+
+  while (num >= 0){
+    temp = a;
+    a = a + b;
+    b = temp;
+    num--;
+  }
+
+  return b;
+}
+
+// recursive
+function fibonacci(num) {
+  if (num <= 1) return 1;
+
+  return fibonacci(num - 1) + fibonacci(num - 2);
+}
+
+// DP solution:
+function fibonacci(num, memo) {
+  memo = memo || {};
+
+  if (memo[num]) return memo[num];
+  if (num <= 1) return 1;
+
+  return memo[num] = fibonacci(num - 1, memo) + fibonacci(num - 2, memo);
+}
+
+
+*/
+
+/* Stairs: 1 or two steps:
+function numWaysBottomUp(n){
+    if(n == 0 || n == 1){
+        return 1;
+    }
+    
+    let nums = new Array(n + 1);
+    nums[0] = 1;
+    nums[1] = 1;
+    for(let i = 2; i <= n; i++){
+        nums[i] = nums[i - 1] + nums[i - 2];
+    }
+    return nums[n];
+}
+
+// Stairs mulitple ways: X = {1, 3, 5}
+// num_ways(n) = num_ways(n -1) + nw(n -2) + nw(n-5);
+// steps = [1, 3, 5];
+function num_ways_X(n, steps){
+    if(n == 0){
+        return 1;
+    }
+
+    let total = 0;
+    for(let step of steps){
+        if(n - step >= 0){
+            total += num_ways_X(n - step);
+        }
+    }
+
+    return total;
+}
+
+// Stairs mulitple ways: X = {1, 3, 5} Bottom up:
+// num_ways(n) = num_ways(n -1) + nw(n -2) + nw(n-5);
+// steps = [1, 3, 5];
+function num_ways_X(n, steps){
+    if(n == 0){
+        return 1;
+    }
+
+    let nums = new Array(n + 1);
+    nums[0] = 1;
+    
+    for(let i = 1; i < n; i++){
+        let total = 0;
+        for(let j of steps){
+        
+            if(i - j >= 0){
+                total += nums[i - j];
+            }
+        }
+        nums[i] = total;
+    }
+
+    return nums[n];
+}
+
+*/

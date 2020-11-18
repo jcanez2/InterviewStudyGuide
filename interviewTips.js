@@ -7,6 +7,7 @@
 * Take tips seriously and add more questions
 about them.
 
+* Ask what they would do now if they were me.
 
 
 * Construct/ traverse data structures
@@ -143,7 +144,7 @@ function wordBreak(s, wordDict){
      return false;
 }
 
-
+// three nums in array random
 let nums = [1,2,3,4,5];
 let n = 3;
 let arr = [];
@@ -163,7 +164,8 @@ let results = arr.map(function(value){
 console.log("sub array " + results);
 
 
-//-------------------------------------
+//------- rating top 5------------------------------
+
 
 let L = [
     { 
@@ -238,6 +240,8 @@ class Queue{
         return this.elements.length === 0;
     }
 }
+
+//=============graph=========
 
 class Graph{
 
@@ -974,3 +978,85 @@ function bfs(start, end, visited, blocks){
     return false;
 }
 
+//=====Repeating chars============ heelloo=======
+/*
+import static java.util.Arrays.asList;
+   List mismatch(String orig, String expr){
+        assert orig != null;
+        assert expr != null;
+        int N = orig.length(), M = expr.length();
+        assert N <= M;        
+        List ans = new ArrayList<>();
+        for(int i = 0, j = 0, k = 0; k <= M; ++k){
+            if (i < N && k < M && orig.charAt(i) == expr.charAt(k) || k == M){
+                if (j != k){
+                    ans.add(asList(expr.charAt(j), j, k-1));
+                }
+                ++i;
+                j = k+1;
+            }
+        }
+        return ans;
+    }
+//--------------------
+for multiple words
+var expressiveWords = function(S, words) {
+  let res = 0;
+  for(let w of words){
+    if(isWord(S, w))res++
+  }
+  return res
+};
+
+function isWord(S,W){
+  let j = 0;
+  let N = S.length;
+  for(let i = 0; i < N; i++){
+    if(S[i] === W[j]) j++
+    else if (S[i] === S[i-1] && S[i-1] === S[i-2]) continue
+    else if (S[i] === S[i-1] && S[i] === S[i+1]) continue
+    else return false
+  }
+  return j === W.length;
+}
+
+*/
+
+// phone number letter combo
+var letterCombinations = function(digits){
+    let result = [""];
+    if(!digits) return [];  //edge case 1: empty string input
+    
+	/*helper function for phonebook. Don't waste a Set or array object to store these constants*/
+    const getLettersForNum = function(number){
+        switch(number){
+          case "2": return ['a','b','c'];
+          case "3": return ['d','e','f'];
+          case "4": return ['g','h','i'];
+          case "5": return ['j','k','l'];
+          case "6": return ['m','n','o'];
+          case "7": return ['p','q','r','s'];
+          case "8": return ['t','u','v'];
+          case "9": return ['w','x','y','z'];
+          default : return ['']; //May be throw an error? 
+        }
+    }
+    /*our cute little helper function. All it does? just append one character at the end.*/
+	const getPermutations = function(permutations, letters){
+          let result = [];
+          letters.forEach(L => {
+               permutations.forEach(P => {
+                    result.push(P + L);
+                 });
+             });
+             return result;
+    }
+    
+    //for each digit, add to existing permutations
+    digits.split("").forEach( (d) =>{
+          result = getPermutations(result, getLettersForNum(d) );   
+    });
+       
+    return result;
+};
+// Letter combo
